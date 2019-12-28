@@ -8,7 +8,7 @@ contract('Marketplace', ([seller, buyer, shipper, otherUser]) => {
     let marketplace;
 
     before(async () => {
-        marketplace = await Marketplace.deployed()
+        marketplace = await Marketplace.deployed();
     });
 
     describe('deployment', async () => {
@@ -122,23 +122,16 @@ contract('Marketplace', ([seller, buyer, shipper, otherUser]) => {
 
         it('shows product\'s info', async () => {
             // SUCCESS: Shows product's info
-            result = await marketplace.getProduct(productCount, { from: shipper });
-
+            result = await marketplace.products(productCount);
             // Check logs
-            const event = result.logs[0].args;
-            assert.equal(event.id.toNumber(), productCount.toNumber(), 'id is correct');
-            assert.equal(event.name, 'iPhone X', 'name is correct');
-            assert.equal(event.price, '1000000000000000000', 'price is correct');
-            assert.equal(event.shipper, shipper, 'shipper is valid');
-            assert.equal(event.shippingPrice, '500000000000000000', 'price is correct');
-            assert.equal(event.owner, seller, 'owner is correct');
-            assert.equal(event.buyer, buyer, 'buyer is correct');
-            expect(Object.values(ProductState)).to.contain.members([event.state.words[0]]);
-
-            // FAILURE: Tried to get invalid product
-            await marketplace.getProduct(99, { from: shipper }).should.be.rejected;
-            // FAILURE: User is not in actors group
-            await marketplace.getProduct(productCount, { from: otherUser }).should.be.rejected;
+            assert.equal(result.id.toNumber(), productCount.toNumber(), 'id is correct');
+            assert.equal(result.name, 'iPhone X', 'name is correct');
+            assert.equal(result.price, '1000000000000000000', 'price is correct');
+            assert.equal(result.shipper, shipper, 'shipper is valid');
+            assert.equal(result.shippingPrice, '500000000000000000', 'price is correct');
+            assert.equal(result.owner, seller, 'owner is correct');
+            assert.equal(result.buyer, buyer, 'buyer is correct');
+            expect(Object.values(ProductState)).to.contain.members([result.state.words[0]]);
         });
 
         it('product gets delivered and purchase - completed', async () => {
