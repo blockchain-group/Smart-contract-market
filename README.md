@@ -1,6 +1,6 @@
 # Smart-contract-market
 
-![image-20200114204748276](C:\Users\zygim\AppData\Roaming\Typora\typora-user-images\image-20200114204748276.png)
+![Buyer page](./images/buyer_screen.png)
 
 This web-app implements very simplified *Ebay* like service based on Ethereum currency and smart contract.
 
